@@ -1,0 +1,30 @@
+body {
+  background-color: whitesmoke;
+}
+
+h3 {
+  margin-bottom: 50px;
+}
+
+.window {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  max-width: 600px;
+}
+
+.well {
+  background-color: white;
+}
+
+.jumbotron {
+  background-color: white;
+}
+
+.alert {
+  display: none;
+}
+
+.container {
+  margin-top: 25px;
+}
