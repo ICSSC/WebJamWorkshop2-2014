@@ -9,6 +9,7 @@ var footer = fs.readFileSync('html/foot.html');
 // Input: clientrequest object, callback({
 //   content: '<html>...</html>',
 //   contentType: 'text/html',
+//   code: 200
 // })
 function route(req, callback) {
   var urlData = url.parse(req.url, true);
