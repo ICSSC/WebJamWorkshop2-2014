@@ -2,7 +2,7 @@ var datastore = require('./datastore');
 
 // Takes a parsed query and a serverresponse object
 // returns true if it will handle the request
-var handleQuery(queryData, resp) {
+function handleQuery(queryData, resp) {
   var query = queryData.query;
   // If the request is to /query
   if (queryData.pathname.indexOf('/query') == 0) {

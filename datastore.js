@@ -1,5 +1,5 @@
 var mongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://heroku:12a12c18b0d60c9942137d8662e9ba3a@linus.mongohq.com:10022/app21449155';
+var url = 'mongodb url goes here';
 var collectionName = 'users';
 
 // Add a user

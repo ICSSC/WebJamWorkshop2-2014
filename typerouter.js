@@ -11,8 +11,7 @@ var footer = fs.readFileSync('html/foot.html');
 //   contentType: 'text/html',
 //   code: 200
 // })
-function route(req, callback) {
-  var urlData = url.parse(req.url, true);
+function route(urlData, callback) {
   var pathname = urlData.pathname;
 
   // Based on the pathname, we'll decide what kind of content it is
