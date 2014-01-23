@@ -27,7 +27,7 @@ btn.onclick = function () {
     // Only execute when readyState == 4 which means ready
     if (xhr.readyState == 4) {
       // Turn the response text into JSON
-      var response = eval('(' + xhr.responseText + ')');
+      var response = JSON.parse(xhr.responseText);
 
       // If successful, make another request to get the updated list of quotes
       if (response.success) {
@@ -37,7 +37,7 @@ btn.onclick = function () {
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
             // Parse the responsetext into a JSON array
-            var quotes = eval('(' + xhr.responseText + ')');
+            var quotes = JSON.parse(xhr.responseText);
 
             // Clear the container of all children
             while (container.firstChild) {

@@ -24,4 +24,4 @@ var server = http.createServer(function(req, resp) {
 
 // Start server, listening on either the port specified (when deployed)
 // or, if not specified, on port 8080
-server.listen(8080);
+server.listen(process.env.PORT || 8080);

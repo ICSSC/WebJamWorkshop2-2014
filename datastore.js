@@ -1,5 +1,5 @@
 var mongoClient = require('mongodb').MongoClient;
-var url = 'mongodb url goes here';
+var url = 'Mongo Url goes here';
 var collectionName = 'users';
 
 // Add a user

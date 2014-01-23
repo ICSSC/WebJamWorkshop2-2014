@@ -29,19 +29,8 @@ function handleQuery(queryData, resp) {
         if (!items || items.length < 0) {
           return writeInvalid(resp);
         }
-        // Build a JSON array [item1, item2....]
-        var response = '[';
-        for (var i = 0; i < items[0].quotes.length; i++) {
-          // wrap it in quotes
-          // IMPORTANT, YOU SHOULD MAKE SURE TO PREVENT INJECTED HTML AND SCRIPTS
-          response += '"' + items[0].quotes[i] + '"';
-          if (i < items[0].quotes.length - 1) {
-            response += ',';
-          }
-        }
-        response += ']';
         resp.writeHead(200);
-        resp.end(response);
+        resp.end(JSON.stringify(items[0].quotes));
       });
     }
     // Yes, we will handle it
@@ -62,7 +51,7 @@ function writeInvalid(resp) {
 // succeeded, write a response object.
 function writeSuccess(resp, success) {
   resp.writeHead(200);
-  resp.end('{"success":' + success + '}');
+  resp.end(JSON.stringify({"success": success}));
 }
 
 exports.handleQuery = handleQuery;

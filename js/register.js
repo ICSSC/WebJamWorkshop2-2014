@@ -25,7 +25,7 @@ btn.onclick = function () {
     // Only execute when readyState == 4 which means ready
     if (xhr.readyState == 4) {
       // Turn the response text into JSON
-      var response = eval('(' + xhr.responseText + ')');
+      var response = JSON.parse(xhr.responseText);
       
       // If successful, go to the user page
       if (response.success) {
