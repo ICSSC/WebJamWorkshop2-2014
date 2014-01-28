@@ -18,24 +18,14 @@ function route(urlData, callback) {
   if (pathname.indexOf('/img') == 0) {
     getImagePath(pathname, callback);
   } else if (pathname.indexOf('/css') == 0) {
-    getCssPath(pathname, callback);
+    directPath(pathname.substring(1), callback, 'text/css');
   } else if (pathname.indexOf('/js') == 0) {
-    getJsPath(pathname, callback);
+    directPath(pathname.substring(1), callback, 'text/javascript');
   // If it doesn't have a pathname that falls into any category, assume
   // its an html page (queries have already been handled at this point)
   } else {
     getHtmlPath(pathname, callback);
   }
-}
-
-function getJsPath(pathname, callback) {
-  // return a direct mapping of the path, with content type text/javascript
-  directPath(pathname.substring(1), callback, 'text/javascript');
-}
-
-function getCssPath(pathname, callback) {
-  // return a direct mapping of the path, with content type text/css
-  directPath(pathname.substring(1), callback, 'text/css');
 }
 
 // png, jpeg, icon
