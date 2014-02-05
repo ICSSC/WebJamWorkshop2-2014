@@ -20,7 +20,7 @@ btn.onclick = function () {
   var xhr = new XMLHttpRequest();
 
   // Open to prepare to send to /query
-  xhr.open('GET', '/query?action=addQuote&pwd=' + pwdStr + '&quote='
+  xhr.open('GET', '/query?action=addQuote&password=' + pwdStr + '&quote='
     + quoteStr + '&name=' + name, true);
   // Callback for whent the query completes
   xhr.onreadystatechange = function() {

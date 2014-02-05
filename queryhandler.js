@@ -1,57 +1,54 @@
 var datastore = require('./datastore');
+var url = require('url');
 
-// Takes a parsed query and a serverresponse object
-// returns true if it will handle the request
-function handleQuery(queryData, resp) {
-  var query = queryData.query;
-  // If the request is to /query
-  if (queryData.pathname.indexOf('/query') == 0) {
-    // Get the action parameter, if it doesn't exist, return invalid
+// handle a query, returns true if the query is a valid query
+function handleQuery(req, resp) {
+  // parse the data like before
+  var parsedData = url.parse(req.url, true);
+  var query = parsedData.query;
+  
+  // if requesting the correct path
+  if (parsedData.pathname.indexOf('/query') == 0) {
     var action = query.action;
-    if (!query.action) {
+    var username = query.name;
+    // ensure that there is an action parameter
+    if (!action) {
       return writeInvalid(resp);
     }
-
-    // Add user
-    if (action == 'addUser' && query.name && query.pwd) {
-      datastore.addUser(query.name, query.pwd, writeSuccess.bind(this, resp));
-
-    // Add quote
-    } else if (action == 'addQuote' && query.name && query.pwd
-        && query.quote) {
-      datastore.addQuote(query.name, query.pwd, query.quote,
-          writeSuccess.bind(this, resp));
-
-    // Get a user
-    } else if (action == 'getUser' && query.name) {
-      datastore.getUser(query.name, function(items) {
-        // If the items list isn't empty
-        if (!items || items.length < 0) {
-          return writeInvalid(resp);
-        }
+    
+    // if we're adding a user, adding a quote, or getting a user, return success
+    // else, return false
+    if (action == 'addUser') {
+      datastore.addUser(query.name, query.password, writeSuccess.bind(this, resp));
+      return true;
+    } else if (action == 'addQuote') {
+      datastore.addQuote(query.name, query.password, query.quote, writeSuccess.bind(this, resp));
+      return true;
+    } else if (action == 'getUser') {
+      // When we get the user, stringify the users quotes
+      datastore.getUser(query.name, function(user) {
+        if (!user) return writeInvalid(resp);
         resp.writeHead(200);
-        resp.end(JSON.stringify(items[0].quotes));
+        resp.end(JSON.stringify(user.quotes));
       });
+      return true;
     }
-    // Yes, we will handle it
-    return true;
+    return writeInvalid(resp);
   }
-  // No, not a query, we won't handle it
   return false;
 }
 
-// Writes a 400 error
+// Return a 400 Bad request
 function writeInvalid(resp) {
   resp.writeHead(400);
   resp.end();
-  return true;
-}
+  return false;
+} 
 
-// Given a ServerResponse object and a boolean whether or not an action
-// succeeded, write a response object.
+// Return the success object
 function writeSuccess(resp, success) {
   resp.writeHead(200);
-  resp.end(JSON.stringify({"success": success}));
+  resp.end(JSON.stringify({'success': success}));
 }
 
 exports.handleQuery = handleQuery;

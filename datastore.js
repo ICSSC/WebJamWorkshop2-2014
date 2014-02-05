@@ -1,72 +1,67 @@
+var mongourl = '';
 var mongoClient = require('mongodb').MongoClient;
-var url = 'Mongo Url goes here';
 var collectionName = 'users';
 
-// Add a user
-function addUser(username, pwd, callback) {
+// callback(success)
+function addUser(username, password, callback) {
   openCollection(function(db, collection) {
-    // First, look to see if a user with the same name already exists
-    collection.find({'name': username}).toArray(function(err, items) {
-      // If it does, return add failed
+    // SELECT * FROM users WHERE name=username
+    collection.find({'name': username }).toArray(function(err, items) {
+      // If the user already exists, return failed
       if (items && items.length > 0) {
-        callback(false);
-      } else {
-        // If the user doesn't exist, add it
-        collection.insert(
-            {'name': username, 'pwd': pwd, 'quotes':[]},
-            {'safe': true},
-            function(err, docs) {
-          callback(true);
-        });
+        db.close();
+        return callback(false);
       }
-      // Make sure to close the database
-      db.close();
+      
+      // insert a user with name=username, password=password,
+      // and quotes as an empty array
+      collection.insert(
+          {'name': username, 'password': password, 'quotes':[]},
+          {'safe': true}, 
+          function(err, docs) {
+            db.close();
+            callback(true);
+          });
     });
   });
 }
 
-// Add a quote
-function addQuote(username, pwd, quote, callback) {
+// callback(success)
+function addQuote(username, password, quote, callback) {
   openCollection(function(db, collection) {
-    // Find a user that matches the name and password,
-    // when you find one, push the quote into the quotes array
-    // of the first user you find
-    collection.findAndModify(
-        {'name': username, 'pwd': pwd},
-        [['_id', 'asc']],
-        {$push: {'quotes': quote}},
-        {'safe': true},
-        function(err, object) {
-          // If there was an error or object is empty
-          // (There is no user with same name and password) return failed
-          if (err || !object) {
-            callback(false);
-          } else {
-           callback(true);
-          }
-          // Make sure to close the database
-          db.close();
-        });
+    // SELECT quotes FROM users WHERE name=username AND password=password
+    // quotes.push(quote)
+    // UPDATE users SET quotes=quotes WHERE name=username AND password=password
+    collection.findAndModify({'name': username, 'password': password},
+      [['_id', 'asc']],
+      {$push: {'quotes': quote}},
+      {'safe': true},
+      function(err, object) {
+        db.close();
+        if (err || !object) {
+          return callback(false);
+        }
+        return callback(true);
+      });
   });
 }
 
-// Get a user
+// callback(user)
 function getUser(username, callback) {
   openCollection(function(db, collection) {
-    // Return an array of users with the same name, should be at max, 1
+    // SELECT * from users WHERE name=username
     collection.find({'name': username}).toArray(function(err, items) {
-      callback(items);
-      // Make sure to close the database
       db.close();
+      if (err || !items) return callback(null);
+      callback(items[0]);
     });
   });
 }
 
-// Helper function to open a connection, remember to always close it!
+// callback(db, collection)
 function openCollection(callback) {
-  mongoClient.connect(url, function(err, db) {
+  mongoClient.connect(mongourl, function(err, db) {
     if (err) throw err;
-
     var collection = db.collection(collectionName);
     callback(db, collection);
   });

@@ -5,7 +5,7 @@ var password = document.getElementById('pwd');
 var alertWind = document.getElementById('alert');
 
 // When clicking the button
-btn.onclick = function () {
+button.onclick = function () {
   // make alert window invisible
   alertWind.style.display = 'none';
 
@@ -19,8 +19,8 @@ btn.onclick = function () {
   var xhr = new XMLHttpRequest();
   
   // Open to prepare to send to /query
-  xhr.open('GET', '/query?action=addUser&name=' + name + '&pwd=' + pwd, false);
-  // Callback for whent the query completes
+  xhr.open('GET', '/query?action=addUser&name=' + name + '&password=' + pwd, true);
+  // Callback for when the query completes
   xhr.onreadystatechange = function() {
     // Only execute when readyState == 4 which means ready
     if (xhr.readyState == 4) {
