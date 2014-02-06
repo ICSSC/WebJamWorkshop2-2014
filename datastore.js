@@ -1,4 +1,4 @@
-var mongourl = '';
+var mongourl = 'mongodb://heroku:2dbe8957234afc09328f2e026b214272@troup.mongohq.com:10020/app21933358';
 var mongoClient = require('mongodb').MongoClient;
 var collectionName = 'users';
 
@@ -27,12 +27,12 @@ function addUser(username, password, callback) {
 }
 
 // callback(success)
-function addQuote(username, password, quote, callback) {
+function addQuote(username, quote, callback) {
   openCollection(function(db, collection) {
-    // SELECT quotes FROM users WHERE name=username AND password=password
+    // SELECT quotes FROM users WHERE name=username
     // quotes.push(quote)
-    // UPDATE users SET quotes=quotes WHERE name=username AND password=password
-    collection.findAndModify({'name': username, 'password': password},
+    // UPDATE users SET quotes=quotes WHERE name=username
+    collection.findAndModify({'name': username},
       [['_id', 'asc']],
       {$push: {'quotes': quote}},
       {'safe': true},
@@ -49,7 +49,7 @@ function addQuote(username, password, quote, callback) {
 // callback(user)
 function getUser(username, callback) {
   openCollection(function(db, collection) {
-    // SELECT * from users WHERE name=username
+    // SELECT * FROM users WHERE name=username
     collection.find({'name': username}).toArray(function(err, items) {
       db.close();
       if (err || !items) return callback(null);
