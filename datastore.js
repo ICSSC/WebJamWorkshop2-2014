@@ -1,4 +1,4 @@
-var mongourl = 'mongodb://heroku:2dbe8957234afc09328f2e026b214272@troup.mongohq.com:10020/app21933358';
+var mongourl = '';
 var mongoClient = require('mongodb').MongoClient;
 var collectionName = 'users';
 
