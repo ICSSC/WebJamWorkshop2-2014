@@ -51,9 +51,11 @@ Some Javascript things I used that I didn't mention or go into depth about:
 ---------------------------------------------------------------------------
 
 - Binding:
-  - This is used in the coding examples, for example, lets say you have two functions:
+  - This is used in the coding examples, for example, lets say you have a function:
+  
         function example(a, b, c, d) { ... }
     Let's say that we want to pass example as a callback, where the callback function format is this:
+    
         function callback(b, c, d) { ... }
     Let's also say that when we pass our example function into the callback, we know exactly what a is.
     In this case, we can "bind" the value of a to our example function to generate a new function that only
