@@ -1,6 +1,5 @@
 // Find the html components
 var btn = document.getElementById('btn');
-var pwd = document.getElementById('pwd');
 var quote = document.getElementById('quote');
 var alertWind = document.getElementById('alert');
 var container = document.getElementById('quotes');
@@ -10,9 +9,6 @@ btn.onclick = function () {
   // make alert window invisible
   alertWind.style.display = 'none';
 
-  // get the values from the two text inputs, make sure to hash the value
-  // of password for security purposes
-  var pwdStr = encodeURIComponent(CryptoJS.SHA256(pwd.value));
   var quoteStr = encodeURIComponent(quote.value);
 
   // Create a new XMLHttpRequest object to be used for
@@ -20,7 +16,7 @@ btn.onclick = function () {
   var xhr = new XMLHttpRequest();
 
   // Open to prepare to send to /query
-  xhr.open('GET', '/query?action=addQuote&password=' + pwdStr + '&quote='
+  xhr.open('GET', '/query?action=addQuote&quote='
     + quoteStr + '&name=' + name, true);
   // Callback for whent the query completes
   xhr.onreadystatechange = function() {

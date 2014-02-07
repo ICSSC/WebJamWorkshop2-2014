@@ -52,10 +52,6 @@ var quoteWindow =
 + '    <span class="input-group-addon">Quote</span>'
 + '    <input class="form-control" type="text" id="quote">'
 + '  </div><br>'
-+ '  <div class="input-group">'
-+ '    <span class="input-group-addon">Password</span>'
-+ '    <input class="form-control" type="password" id="pwd">'
-+ '  </div><br>'
 + '  <div class="btn btn-primary" id="btn">Add Quote</div>'
 + '</div>';
 var addQuoteScript = '<script type="text/javascript" src="/js/user.js"></script>';
