@@ -54,6 +54,7 @@ Some Javascript things I used that I didn't mention or go into depth about:
   - This is used in the coding examples, for example, lets say you have a function:
   
         function example(a, b, c, d) { ... }
+        
     Let's say that we want to pass example as a callback, where the callback function format is this:
     
         function callback(b, c, d) { ... }
