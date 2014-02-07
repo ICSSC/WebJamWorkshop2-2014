@@ -2,7 +2,7 @@ var datastore = require('./datastore');
 
 
 
-// handle a query, returns true if the query is a valid query
+// handle a query
 function handleQuery(req, resp) {
   var query = req.query;
   var action = query.action;
@@ -11,8 +11,7 @@ function handleQuery(req, resp) {
   if (!action) {
     return writeInvalid(resp);
   }
-  // if we're adding a user, adding a quote, or getting a user, return success
-  // else, return false
+  // if we're adding a user, adding a quote, or getting a user
   if (action == 'addUser') {
     datastore.addUser(query.name, query.password, writeSuccess.bind(this, resp));
   } else if (action == 'addQuote') {
@@ -24,9 +23,13 @@ function handleQuery(req, resp) {
       resp.writeHead(200);
       resp.end(JSON.stringify(user.quotes));
     });
+    
+  // Get a user and check against the password
   } else if (action == 'login') {
     datastore.getUser(query.name, function(user) {
       var success = (user && user.password == query.password);
+      
+      // If the password is the same, set the session variable
       if (success) {
         req.session.username = query.name;
       }
