@@ -200,13 +200,13 @@ Security
 - There are several security flaws with my code example:
   - Escaping Html content:
     If you'll notice, I'm inserting user input data directly into the html file that is loaded. What if a user chooses
-    his username or quote contain the string:
+    his username or quote to contain the string:
     ```html
     <script type="text/javascript">window.location.href='http://phishingscam.com'</script>
     ```
     Our server will just blindly insert this data into the web page. The browser won't know the difference, it'll just
     parse it like any other tag and execute the script inside. In this case, anyone stumbling onto this user's quotes
-    page would be lead to a malicious phising scam web page. The correct way to handle user data is to "sanitize" it,
+    page would be led to a malicious phising scam web page. The correct way to handle user data is to "sanitize" it,
     that is clean up the data to remove any and all elements that could be malicious.
 
     Luckily, there are numerous modules available that sanitize content for you:
@@ -224,7 +224,7 @@ Security
     to avoid such kinds of attacks requires a bit more work. We need to pass a dyanmically generated token back to
     the client and require that token when any kind of request is made.
 
-    XSRF: http://en.wikipedia.org/wiki/XSRFv
+    XSRF: http://en.wikipedia.org/wiki/XSRF
     
     One solution, utilizing express: http://sporcic.org/2012/06/csrf-with-nodejs-and-express/
     
