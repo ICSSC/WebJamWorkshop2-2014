@@ -6,7 +6,7 @@ Somethings not covered in the workshop due to lack of time:
 
 - Pushing to Heroku servers:
   - after making our changes, we want to send our code to heroku's servers.
-    to do this, we navigate to our code directory and type the following commands
+    To do this, we navigate to our code directory and type the following commands
     in our command prompt or terminal
     
         git add .
@@ -24,7 +24,7 @@ Somethings not covered in the workshop due to lack of time:
     
 - Heroku Ports:
   - In our example, we've been using a hard coded port 8080; however, heroku doesn't
-    necessarily allow us to use port 8080. In fact, they port we are supposed to use
+    necessarily allow us to use port 8080. In fact, the port we are supposed to use
     is defined in a variable accessible by:
     
         process.env.PORT
@@ -134,8 +134,8 @@ Some Javascript things I used that I didn't mention or go into depth about:
     
     will match any single character. 'a', 'b', '1', 'A', '.', '_', '-', all match, but anything that isn't
     exactly one character, 'aa', won't match.
-    If any character is postfixed by a '+' or a '*' character, the previous character is
-    allowed to repeat either 1 or more times (for the '+') or 0 or more times (for the '*'). This means that the regex:
+    If any character is postfixed by a '+' or a '\*' character, the previous character is
+    allowed to repeat either 1 or more times (for the '+') or 0 or more times (for the '\*'). This means that the regex:
     
     ```javascript
         /.*/ 
@@ -163,7 +163,7 @@ Some Javascript things I used that I didn't mention or go into depth about:
         /abc.*def/ 
     ```
     
-    will match exactly the same strings. The difference, that the first one has a parenthesis around the '.*' segment, simply
+    will match exactly the same strings. The difference, that the first one has a parenthesis around the '.\*' segment, simply
     allows us to retrieve what matches that segment later. It essentially tells the regex engine, "Save what matches inside the parenthesis
     as the first group". for the first regex testing against 'abchello worlddef', 'hello world' will be the value of the first group. 
     
