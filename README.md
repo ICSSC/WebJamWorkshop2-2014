@@ -195,7 +195,38 @@ Some Javascript things I used that I didn't mention or go into depth about:
     Will match any two character sequence where the first character is a '\'.
     
     
+Security
+--------
+- There are several security flaws with my code example:
+  - Escaping Html content:
+    If you'll notice, I'm inserting user input data directly into the html file that is loaded. What if a user chooses
+    his username or quote contain the string:
+    ```html
+    <script type="text/javascript">window.location.href='http://phishingscam.com'</script>
+    ```
+    Our server will just blindly insert this data into the web page. The browser won't know the difference, it'll just
+    parse it like any other tag and execute the script inside. In this case, anyone stumbling onto this user's quotes
+    page would be lead to a malicious phising scam web page. The correct way to handle user data is to "sanitize" it,
+    that is clean up the data to remove any and all elements that could be malicious.
+
+    Luckily, there are numerous modules available that sanitize content for you:
     
+    https://nodejsmodules.org/tags/sanitize
+    
+    https://npmjs.org/package/sanitize-html
+    
+  - Forging requests:
+    We were under the impression that by not including the "addQuote" script when a user is not logged in would be
+    sufficient in preventing unauthorized access to adding quotes. This isn't true. One can easily learn the structure
+    of how AJAX requests are made to the server, so one can also easily forge a request. Therefore, you must check to
+    validate that the user sending the addQuote request is the correct user (i.e. by checking session variables). It
+    turns out that even this isn't actually secure. There is something called a cross site request forgery; however,
+    to avoid such kinds of attacks requires a bit more work. We need to pass a dyanmically generated token back to
+    the client and require that token when any kind of request is made.
+
+    XSRF: http://en.wikipedia.org/wiki/XSRFv
+    
+    One solution, utilizing express: http://sporcic.org/2012/06/csrf-with-nodejs-and-express/
     
     
     
